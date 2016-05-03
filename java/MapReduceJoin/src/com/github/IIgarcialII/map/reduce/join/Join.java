@@ -29,10 +29,15 @@ public class Join {
         s.add(new Pair<Integer, Integer>(10,9));
 
         // Let's say the "system :P" creates as set of mappers
-        final Mapper mone =  new Mapper(new Grouper());
-        final Mapper mtwo =  new Mapper(new Grouper());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Mapper mone =  new Mapper(new Grouper());
+                mone.map(r, "R");
+            }
+        }).run();
 
-        mone.map(r, "R");
+        final Mapper mtwo =  new Mapper(new Grouper());
         mtwo.map(s, "S");
 
         final Reducer reducer = Reducer.getInstance();

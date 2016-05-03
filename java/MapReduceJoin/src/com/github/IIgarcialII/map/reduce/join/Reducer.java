@@ -1,6 +1,7 @@
 package com.github.IIgarcialII.map.reduce.join;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Just a smple and naive reducer implementation
@@ -24,7 +25,7 @@ public class Reducer {
 
     private Reducer() {
         this.rows = Collections.synchronizedList(new ArrayList<Row>());
-        this.data = Collections.synchronizedMap(new HashMap<Integer, List<Pair<String, Integer>>>());
+        this.data = new ConcurrentHashMap<>();
     }
 
     /**
