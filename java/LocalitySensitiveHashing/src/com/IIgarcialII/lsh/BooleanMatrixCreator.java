@@ -9,24 +9,30 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Alejandro
+ * @author Alejandro Garcia
  */
 final class BooleanMatrixCreator {
 
+        /**
+         * Creates a boolean matrix with document number in row and shingles in columns
+         *
+         * @param documentShingles
+         * @return
+         */
         protected boolean[][] createMatrix(final Map<Integer, Set<String>> documentShingles) {
                 final Set<String> allShingles = allShinglesSet(documentShingles);
                 final int maxNumberOfShingles = allShingles.size();
-                final boolean[][] result = new boolean[maxNumberOfShingles][documentShingles.size()];
+                // docs are rows and shingles columns, this format will speed up things at the similarity calculation
+                final boolean[][] result = new boolean[documentShingles.size()][maxNumberOfShingles];
                 final Map<String, Integer> allShinglesIndexes = allShinglesIndex(allShingles);
-                //place documents in cols and shingles by row
-                //Shingles are alphabetically ordered
+
                 String currentShingle = null;
                 int shingleIndex = 0;
                 for (int docIndex = 0; docIndex < documentShingles.size(); ++docIndex) {
                         for (final Iterator<String> shingles = documentShingles.get(docIndex).iterator(); shingles.hasNext(); ) {
                                 currentShingle = shingles.next();
                                 shingleIndex = allShinglesIndexes.get(currentShingle);
-                                result[shingleIndex][docIndex] = true;
+                                result[docIndex][shingleIndex] = true;
                         }
                 }
                 return result;
@@ -39,7 +45,7 @@ final class BooleanMatrixCreator {
          * @return
          */
         private Set<String> allShinglesSet(final Map<Integer, Set<String>> documentShingles) {
-                // Probably faster this way than appending all values to a set
+                // "Probably" faster this way than appending all values to a set
                 final Map<String, Boolean> keyShingleMap = new HashMap<String, Boolean>();
                 for (final Iterator<Integer> it = documentShingles.keySet().iterator(); it.hasNext(); ) {
                         for (final Iterator<String> si = documentShingles.get(it.next()).iterator(); si.hasNext(); ) {
@@ -63,5 +69,4 @@ final class BooleanMatrixCreator {
                 }
                 return result;
         }
-
 }
