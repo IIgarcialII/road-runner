@@ -61,7 +61,9 @@ public final class Application {
                 // Min-hashing will give a very approx result as JS using much less space
                 // Here we are using the matrix form but in practice this should be an adjacency list
                 // This matrix is way to sparse and we can save a lot of mem with the adjancency list
-                final int[][] minHashingMatrix = new SimilarityMatrixCreator().create(docs, matrix);
+                int numberOfHasFunctions = (int) (matrix[0].length * 0.1);
+                final int[][] minHashingMatrix = new SimilarityMatrixCreator(numberOfHasFunctions).create
+                        (matrix);
                 final double[][] simMatrix = new SimilarityMatrixCalculator().calculate(minHashingMatrix);
                 for (int row = 0; row < simMatrix.length; ++row) {
                         for (int col = 0; col < simMatrix.length; ++col) {
