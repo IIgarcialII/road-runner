@@ -4,7 +4,7 @@
 package com.IIgarcialII.lsh;
 
 /**
- * @author Alejandro
+ * @author Alejandro Garcia
  */
 public class JaccardSimilarityCalculator {
 
