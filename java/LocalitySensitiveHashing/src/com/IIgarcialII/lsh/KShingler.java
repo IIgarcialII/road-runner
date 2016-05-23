@@ -38,10 +38,9 @@ final class KShingler {
                 final Map<String, Boolean> keyShingle = new HashMap<String, Boolean>();
                 final char[] chars = document.toCharArray();
                 String currentShingle = null;
-                for (int i = 0; i < chars.length - (k - 1); i++) {
-                        if (i + 1 <= chars.length - 1) {
-                                currentShingle = chars[i] + "" + chars[i + 1];
-                        }
+                for (int i = 0; i < chars.length - k; i++) {
+                        currentShingle = document.substring(i, i + k);
+                        currentShingle.toLowerCase();
                         keyShingle.put(currentShingle, true);
                 }
                 return keyShingle.keySet();
